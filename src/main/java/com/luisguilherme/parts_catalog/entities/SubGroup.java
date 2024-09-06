@@ -21,7 +21,7 @@ public class SubGroup {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "group_id")
 	private Group group;

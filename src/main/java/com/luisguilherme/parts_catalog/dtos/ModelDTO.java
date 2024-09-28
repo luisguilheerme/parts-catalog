@@ -9,16 +9,14 @@ public class ModelDTO {
 	private Long id;
 	@NotBlank(message = "Campo Obrigatório")
 	private String name;
-	private BrandDTO brand;
 	
 	public ModelDTO() {
 		
 	}	
 
-	public ModelDTO(Long id, String name, BrandDTO brand) {
+	public ModelDTO(Long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.brand = brand;
 	}
 
 	public ModelDTO(Model entity) {
@@ -32,10 +30,6 @@ public class ModelDTO {
 
 	public String getName() {
 		return name;
-	}
-
-	public BrandDTO getBrand() {
-		return brand;
 	}
 
 }

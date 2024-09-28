@@ -11,29 +11,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.luisguilherme.parts_catalog.dtos.SubGroupDTO;
-import com.luisguilherme.parts_catalog.services.SubGroupService;
+import com.luisguilherme.parts_catalog.dtos.ModelDTO;
+import com.luisguilherme.parts_catalog.services.ModelService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/subgroups")
-@Tag(name = "SubGroups")
-public class SubGroupController {
+@RequestMapping(value = "/models")
+@Tag(name = "Models")
+public class ModelController {
 	
 	@Autowired
-	SubGroupService service;	
+	ModelService service;	
 	
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<SubGroupDTO> findById(@PathVariable Long id) {
-		SubGroupDTO dto = service.findById(id);
+	public ResponseEntity<ModelDTO> findById(@PathVariable Long id) {
+		ModelDTO dto = service.findById(id);
 		return ResponseEntity.ok(dto);
 	}	
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PutMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<SubGroupDTO> update(@PathVariable Long id, @Valid @RequestBody SubGroupDTO dto) {
+	public ResponseEntity<ModelDTO> update(@PathVariable Long id, @Valid @RequestBody ModelDTO dto) {
 		dto = service.update(id, dto);		
 		return ResponseEntity.ok(dto);
 	}

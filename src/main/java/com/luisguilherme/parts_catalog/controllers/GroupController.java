@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.luisguilherme.parts_catalog.dtos.GroupDTO;
+import com.luisguilherme.parts_catalog.dtos.SubGroupDTO;
 import com.luisguilherme.parts_catalog.services.GroupService;
+import com.luisguilherme.parts_catalog.services.SubGroupService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,6 +31,9 @@ public class GroupController {
 	
 	@Autowired
 	GroupService service;	
+	
+	@Autowired
+	SubGroupService subGroupservice;
 	
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<GroupDTO> findById(@PathVariable Long id) {
@@ -62,6 +67,20 @@ public class GroupController {
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(value = "/{id}/subgroups", produces = "application/json")
+	public ResponseEntity<List<SubGroupDTO>> findAllSubGroup(@PathVariable Long id) {
+		List<SubGroupDTO> dto = subGroupservice.findAll(id);
+		return ResponseEntity.ok(dto);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PostMapping(value = "/{id}/subgroups", produces = "application/json")
+	public ResponseEntity<SubGroupDTO> insertSubGroup(@PathVariable Long id, @Valid @RequestBody SubGroupDTO dto) {
+		dto = subGroupservice.insert(id, dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+		return ResponseEntity.created(uri).body(dto);
 	}
 	
 }

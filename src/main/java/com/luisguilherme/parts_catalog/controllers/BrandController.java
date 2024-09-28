@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.luisguilherme.parts_catalog.dtos.BrandDTO;
+import com.luisguilherme.parts_catalog.dtos.ModelDTO;
 import com.luisguilherme.parts_catalog.services.BrandService;
+import com.luisguilherme.parts_catalog.services.ModelService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,6 +31,9 @@ public class BrandController {
 	
 	@Autowired
 	BrandService service;	
+	
+	@Autowired
+	ModelService modelService;	
 	
 	@GetMapping(value = "/{id}", produces = "application/json")
 	public ResponseEntity<BrandDTO> findById(@PathVariable Long id) {
@@ -62,6 +67,20 @@ public class BrandController {
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(value = "/{id}/models", produces = "application/json")
+	public ResponseEntity<List<ModelDTO>> findAllModels(@PathVariable Long id) {
+		List<ModelDTO> dto = modelService.findAll(id);
+		return ResponseEntity.ok(dto);
+	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PostMapping(value = "/{id}/models", produces = "application/json")
+	public ResponseEntity<ModelDTO> insertSubGroup(@PathVariable Long id, @Valid @RequestBody ModelDTO dto) {
+		dto = modelService.insert(id, dto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+		return ResponseEntity.created(uri).body(dto);
 	}
 	
 }

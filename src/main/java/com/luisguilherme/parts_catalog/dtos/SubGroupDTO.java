@@ -9,22 +9,19 @@ public class SubGroupDTO {
 	private Long id;
 	@NotBlank(message = "Campo Obrigatório")
 	private String name;
-	private GroupDTO groupDTO;
 	
 	public SubGroupDTO() {
 		
 	}
 
-	public SubGroupDTO(Long id, String name, GroupDTO groupDTO) {
+	public SubGroupDTO(Long id, String name) {
 		this.id = id;
 		this.name = name;
-		this.groupDTO =groupDTO;
 	}
 	
 	public SubGroupDTO(SubGroup entity) {
 		id = entity.getId();
 		name = entity.getName();
-		groupDTO = new GroupDTO(entity.getGroup());
 	}
 
 	public Long getId() {
@@ -33,10 +30,6 @@ public class SubGroupDTO {
 
 	public String getName() {
 		return name;
-	}
-	
-	public GroupDTO getGroupDTO() {
-		return groupDTO;
 	}
 
 }

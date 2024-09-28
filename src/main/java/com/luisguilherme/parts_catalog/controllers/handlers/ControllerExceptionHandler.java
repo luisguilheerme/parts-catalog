@@ -1,4 +1,4 @@
-package com.luisguilherme.parts_catalog.controllers;
+package com.luisguilherme.parts_catalog.controllers.handlers;
 
 import java.time.Instant;
 

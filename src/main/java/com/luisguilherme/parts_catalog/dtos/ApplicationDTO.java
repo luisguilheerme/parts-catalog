@@ -8,7 +8,7 @@ public class ApplicationDTO {
 	private String obs;
 	private Integer startingYear;
 	private Integer finalYear;
-	private ModelDTO modelDTO;
+	private ModelDTO model;
 	
 	public ApplicationDTO() {
 		
@@ -19,7 +19,7 @@ public class ApplicationDTO {
 		this.obs = obs;
 		this.startingYear = startingYear;
 		this.finalYear = finalYear;
-		this.modelDTO = modelDTO;
+		this.model = modelDTO;
 	}
 	
 	public ApplicationDTO(Application entity) {
@@ -27,7 +27,7 @@ public class ApplicationDTO {
 		obs = entity.getObs();
 		startingYear = entity.getStartingYear();
 		finalYear = entity.getFinalYear();
-		modelDTO = new ModelDTO(entity.getModel());
+		model = new ModelDTO(entity.getModel());
 	}
 
 	public Long getId() {
@@ -46,8 +46,8 @@ public class ApplicationDTO {
 		return finalYear;
 	}
 
-	public ModelDTO getModelDTO() {
-		return modelDTO;
+	public ModelDTO getModel() {
+		return model;
 	}
 
 }

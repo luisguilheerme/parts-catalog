@@ -18,7 +18,7 @@ public class PartDTO {
 	private String description;
 	private String imgUrl;
     private String manufacturerName;
-    private SubGroupDTO subGroupDTO;
+    private SubGroupDTO subGroup;
 
     
     private List<String> codes = new ArrayList<>();
@@ -30,12 +30,12 @@ public class PartDTO {
 		
 	}
 
-	public PartDTO(Long id, String description, String imgUrl, String manufacturerName, SubGroupDTO subGroupDTO) {
+	public PartDTO(Long id, String description, String imgUrl, String manufacturerName, SubGroupDTO subGroup) {
 	    this.id = id;
 	    this.description = description;
 	    this.imgUrl = imgUrl;
 	    this.manufacturerName = manufacturerName;
-	    this.subGroupDTO = subGroupDTO;
+	    this.subGroup = subGroup;
 	}
 
 	public PartDTO(Part entity) {
@@ -44,7 +44,7 @@ public class PartDTO {
 	    imgUrl = entity.getImgUrl();
 	    manufacturerName = entity.getManufacturer().getName();
 	    
-	    subGroupDTO = new SubGroupDTO(entity.getSubGroup());
+	    subGroup = new SubGroupDTO(entity.getSubGroup());
 	    
 	    for (Code c : entity.getCodes()) {
 	    	codes.add(c.getCode()); 
@@ -77,8 +77,8 @@ public class PartDTO {
 		return manufacturerName;
 	}	
 
-	public SubGroupDTO getSubGroupDTO() {
-		return subGroupDTO;
+	public SubGroupDTO getSubGroup() {
+		return subGroup;
 	}
 
 	public List<String> getCodes() {

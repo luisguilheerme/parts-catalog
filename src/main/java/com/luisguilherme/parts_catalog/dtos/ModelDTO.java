@@ -21,7 +21,7 @@ public class ModelDTO {
 
 	public ModelDTO(Model entity) {
 		id = entity.getId();
-		name = entity.getName();
+		name = entity.getName();		
 	}
 
 	public Long getId() {

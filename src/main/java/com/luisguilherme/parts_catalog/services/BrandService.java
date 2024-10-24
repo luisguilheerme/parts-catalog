@@ -24,9 +24,9 @@ public class BrandService {
 	
 	@Transactional(readOnly = true)
 	public BrandDTO findById(Long id) {		
-		Brand product = repository.findById(id).orElseThrow(
+		Brand brand = repository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("Marca não encontrado") );
-		return new BrandDTO(product);
+		return new BrandDTO(brand);
 	}
 	
 	@Transactional(readOnly = true)

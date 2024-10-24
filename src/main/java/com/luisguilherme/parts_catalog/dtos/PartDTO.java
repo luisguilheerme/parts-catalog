@@ -4,37 +4,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.luisguilherme.parts_catalog.entities.Application;
-import com.luisguilherme.parts_catalog.entities.Code;
-import com.luisguilherme.parts_catalog.entities.OriginalCode;
 import com.luisguilherme.parts_catalog.entities.Part;
-import com.luisguilherme.parts_catalog.entities.StarterAlternator;
 
 import jakarta.validation.constraints.NotBlank;
 
 public class PartDTO {
 
 	private Long id;
+	
 	@NotBlank(message = "Campo Obrigatório")
 	private String description;
-	private String imgUrl;
-    private String manufacturerName;
+	
+	private String imgUrl;	
+    private ManufacturerDTO manufacturer;
     private SubGroupDTO subGroup;
-
-    
+	
+    private List<ApplicationDTO> applications = new ArrayList<>();    
     private List<String> codes = new ArrayList<>();
     private List<String> originalCodes = new ArrayList<>();
     private List<String> starterAlternatorCodes = new ArrayList<>();
-    private List<ApplicationDTO> applications = new ArrayList<>();
+    
 	
 	public PartDTO() {
 		
 	}
 
-	public PartDTO(Long id, String description, String imgUrl, String manufacturerName, SubGroupDTO subGroup) {
+	public PartDTO(Long id, String description, String imgUrl, ManufacturerDTO manufacturer, SubGroupDTO subGroup) {
 	    this.id = id;
 	    this.description = description;
 	    this.imgUrl = imgUrl;
-	    this.manufacturerName = manufacturerName;
+	    this.manufacturer = manufacturer;
 	    this.subGroup = subGroup;
 	}
 
@@ -42,18 +41,18 @@ public class PartDTO {
 	    id = entity.getId();
 	    description = entity.getDescription();
 	    imgUrl = entity.getImgUrl();
-	    manufacturerName = entity.getManufacturer().getName();
 	    
+	    manufacturer = new ManufacturerDTO(entity.getManufacturer());	    
 	    subGroup = new SubGroupDTO(entity.getSubGroup());
 	    
-	    for (Code c : entity.getCodes()) {
-	    	codes.add(c.getCode()); 
+	    for (String c : entity.getCodes()) {
+	    	codes.add(c); 
 	    }
-	    for (OriginalCode oc : entity.getOriginalCodes()) {
-	    	originalCodes.add(oc.getCode()); 
+	    for (String oc : entity.getOriginalCodes()) {
+	    	originalCodes.add(oc); 
 	    }
-	    for (StarterAlternator sa : entity.getStartersAlternators()) {
-	    	starterAlternatorCodes.add(sa.getCode()); 
+	    for (String sac : entity.getStartersAlternatorsCodes()) {
+	    	starterAlternatorCodes.add(sac); 
 	    }
 		for (Application a : entity.getApplications()) {
 			applications.add(new ApplicationDTO(a));
@@ -73,8 +72,8 @@ public class PartDTO {
 		return imgUrl;
 	}
 	
-	public String getManifactureName() {
-		return manufacturerName;
+	public ManufacturerDTO getManufacturer() {
+		return manufacturer;
 	}	
 
 	public SubGroupDTO getSubGroup() {
@@ -89,7 +88,7 @@ public class PartDTO {
 		return originalCodes;
 	}
 
-	public List<String> getStartersAlternators() {
+	public List<String> getStartersAlternatorsCodes() {
 		return starterAlternatorCodes;
 	}
 

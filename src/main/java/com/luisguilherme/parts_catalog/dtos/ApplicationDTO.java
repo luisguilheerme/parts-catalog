@@ -14,12 +14,12 @@ public class ApplicationDTO {
 		
 	}
 
-	public ApplicationDTO(Long id, String obs, Integer startingYear, Integer finalYear, ModelDTO modelDTO) {
+	public ApplicationDTO(Long id, String obs, Integer startingYear, Integer finalYear, ModelDTO model) {
 		this.id = id;
 		this.obs = obs;
 		this.startingYear = startingYear;
 		this.finalYear = finalYear;
-		this.model = modelDTO;
+		this.model = model;
 	}
 	
 	public ApplicationDTO(Application entity) {

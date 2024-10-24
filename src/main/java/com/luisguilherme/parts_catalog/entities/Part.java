@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,16 +35,22 @@ public class Part {
 	@JoinColumn(name = "subgroup_id")
 	private SubGroup subGroup;
 	
-	@OneToMany(mappedBy = "part")
-	private List<Code> codes = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "part")
-	private List<OriginalCode> originalCodes = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "part")
-	private List<StarterAlternator> startersAlternators = new ArrayList<>();
-	
-	@OneToMany(mappedBy = "part")
+	@ElementCollection
+	@CollectionTable(name = "part_code", joinColumns = @JoinColumn(name = "part_id"))
+	@Column(name = "code")
+	private List<String> codes = new ArrayList<>();
+
+	@ElementCollection
+	@CollectionTable(name = "part_original_code", joinColumns = @JoinColumn(name = "part_id"))
+	@Column(name = "original_code")
+	private List<String> originalCodes = new ArrayList<>();
+
+	@ElementCollection
+	@CollectionTable(name = "part_starter_alternator", joinColumns = @JoinColumn(name = "part_id"))
+	@Column(name = "starter_alternator")
+	private List<String> startersAlternatorsCodes = new ArrayList<>();
+	    
+	@OneToMany(mappedBy = "part", cascade = CascadeType.ALL)
 	private List<Application> applications = new ArrayList<>();
 	
 	public Part() {
@@ -94,16 +104,16 @@ public class Part {
 		this.subGroup = subGroup;
 	}
 
-	public List<Code> getCodes() {
+	public List<String> getCodes() {
 		return codes;
 	}
 
-	public List<OriginalCode> getOriginalCodes() {
+	public List<String> getOriginalCodes() {
 		return originalCodes;
 	}
 
-	public List<StarterAlternator> getStartersAlternators() {
-		return startersAlternators;
+	public List<String> getStartersAlternatorsCodes() {
+		return startersAlternatorsCodes;
 	}
 
 	public List<Application> getApplications() {

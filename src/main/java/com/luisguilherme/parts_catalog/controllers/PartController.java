@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.luisguilherme.parts_catalog.dtos.ApplicationDTO;
+import com.luisguilherme.parts_catalog.dtos.CodeDTO;
 import com.luisguilherme.parts_catalog.dtos.PartDTO;
 import com.luisguilherme.parts_catalog.services.PartService;
 
@@ -64,4 +66,29 @@ public class PartController {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@PostMapping(value = "/{id}/applications", produces = "application/json")
+	public ResponseEntity<ApplicationDTO> addApplication(@PathVariable Long id, @Valid @RequestBody ApplicationDTO dto) {
+		service.addApplication(dto, id);
+		return ResponseEntity.ok(dto);
+	}
+	
+	@PostMapping(value = "/{id}/codes", produces = "application/json")
+	public ResponseEntity<CodeDTO> addCode(@PathVariable Long id, @Valid @RequestBody CodeDTO code) {
+		service.addCode(code, id);
+		return ResponseEntity.ok(code);
+	}
+	
+	@PostMapping(value = "/{id}/original-codes", produces = "application/json")
+	public ResponseEntity<CodeDTO> addOriginalCode(@PathVariable Long id, @Valid @RequestBody CodeDTO code) {
+		service.addOriginalCode(code, id);
+		return ResponseEntity.ok(code);
+	}
+	
+	@PostMapping(value = "/{id}/starter-alternator-codes", produces = "application/json")
+	public ResponseEntity<CodeDTO> addStarterAlternatorCode(@PathVariable Long id, @Valid @RequestBody CodeDTO code) {
+		service.addStarterAlternatorCode(code, id);
+		return ResponseEntity.ok(code);
+	}
+	
 }

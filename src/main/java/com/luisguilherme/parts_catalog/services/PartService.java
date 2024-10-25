@@ -1,9 +1,6 @@
 package com.luisguilherme.parts_catalog.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.luisguilherme.parts_catalog.dtos.ApplicationDTO;
+import com.luisguilherme.parts_catalog.dtos.CodeDTO;
 import com.luisguilherme.parts_catalog.dtos.PartDTO;
 import com.luisguilherme.parts_catalog.entities.Application;
 import com.luisguilherme.parts_catalog.entities.Manufacturer;
@@ -18,7 +16,6 @@ import com.luisguilherme.parts_catalog.entities.Model;
 import com.luisguilherme.parts_catalog.entities.Part;
 import com.luisguilherme.parts_catalog.entities.SubGroup;
 import com.luisguilherme.parts_catalog.repositories.PartRepository;
-import com.luisguilherme.parts_catalog.services.exceptions.DatabaseException;
 import com.luisguilherme.parts_catalog.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -72,6 +69,45 @@ public class PartService {
 			throw new ResourceNotFoundException("Peça não encontrada");
 		}					
 		repository.deleteById(id);	
+	}
+	
+	@Transactional
+	public ApplicationDTO addApplication(ApplicationDTO applicationDTO, Long partId) {
+		Part part = repository.findById(partId).orElseThrow(
+				() -> new ResourceNotFoundException("Peça não encontrada"));
+
+	    Application application = applicationService.insert(part, applicationDTO);
+	    part.getApplications().add(application);
+	    part = repository.save(part);
+
+	    return new ApplicationDTO(application);	        
+	}
+	
+	@Transactional
+	public CodeDTO addCode(CodeDTO code, Long partId) {
+		Part part = repository.findById(partId).orElseThrow(
+				() -> new ResourceNotFoundException("Peça não encontrada"));
+		part.getCodes().add(code.getCode());
+		part = repository.save(part);
+		return code;
+	}
+	
+	@Transactional
+	public CodeDTO addOriginalCode(CodeDTO code, Long partId) {
+		Part part = repository.findById(partId).orElseThrow(
+				() -> new ResourceNotFoundException("Peça não encontrada"));
+		part.getOriginalCodes().add(code.getCode());
+		part = repository.save(part);
+		return code;
+	}
+	
+	@Transactional
+	public CodeDTO addStarterAlternatorCode(CodeDTO code, Long partId) {
+		Part part = repository.findById(partId).orElseThrow(
+				() -> new ResourceNotFoundException("Peça não encontrada"));
+		part.getStartersAlternatorsCodes().add(code.getCode());
+		part = repository.save(part);
+		return code;
 	}
 	
 	private void copyDtoToEntity(PartDTO dto, Part entity) {

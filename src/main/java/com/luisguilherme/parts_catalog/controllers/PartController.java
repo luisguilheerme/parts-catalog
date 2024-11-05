@@ -1,6 +1,7 @@
 package com.luisguilherme.parts_catalog.controllers;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -91,4 +93,13 @@ public class PartController {
 		return ResponseEntity.ok(code);
 	}
 	
+	@GetMapping(value = "/search", produces = "application/json")
+	public ResponseEntity<List<PartDTO>> search(
+										@RequestParam(value = "code", required = false) String code,
+										@RequestParam(value = "originalCode", required = false) String originalCode,
+										@RequestParam(value = "starterAlternatorCode", required = false) String starterAlternatorCode) {
+		List<PartDTO >dto = service.search(code, originalCode, starterAlternatorCode);
+		return ResponseEntity.ok(dto);
+	}
+
 }

@@ -1,8 +1,5 @@
 package com.luisguilherme.parts_catalog.services;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +17,7 @@ import com.luisguilherme.parts_catalog.entities.Part;
 import com.luisguilherme.parts_catalog.entities.SubGroup;
 import com.luisguilherme.parts_catalog.repositories.PartRepository;
 import com.luisguilherme.parts_catalog.services.exceptions.ResourceNotFoundException;
+import com.luisguilherme.parts_catalog.specifications.PartQueryFilter;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -40,8 +38,8 @@ public class PartService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<PartDTO> findAll(Pageable pageable){
-		Page<Part> result = repository.findAll(pageable);
+	public Page<PartDTO> findAll(PartQueryFilter filter, Pageable pageable) {
+		Page<Part> result = repository.findAll(filter.toSpecification(), pageable);
 		return result.map(x -> new PartDTO(x));
 	}
 	
@@ -111,28 +109,6 @@ public class PartService {
 		part.getStartersAlternatorsCodes().add(code.getCode());
 		part = repository.save(part);
 		return code;
-	}
-	
-	@Transactional(readOnly = true)
-	public List<PartDTO> search(String code, String originalCode, String starterAlternatorCode) {
-
-		List<Part> parts = new ArrayList<>();
-        
-        if (code != null) {
-            parts = repository.findByCode(code);
-        } else if (originalCode != null) {
-            parts = repository.findByOriginalCode(originalCode);
-        } else if (starterAlternatorCode != null) {
-            parts = repository.findByStarterAlternatorCode(starterAlternatorCode);
-        } else {
-            throw new IllegalArgumentException("É necessário informar ao menos um parâmetro de pesquisa.");        	
-        }
-        if (parts.size() == 0) {
-            throw new ResourceNotFoundException("Peça não encontrada.");
-        }
-
-        return parts.stream().map(x -> new PartDTO(x)).toList();
-		
 	}	
 		
 	private void copyDtoToEntity(PartDTO dto, Part entity) {

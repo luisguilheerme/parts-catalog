@@ -10,6 +10,7 @@ public class PartQueryFilter {
     private String originalCode;
     private String starterAlternatorCode;
     private String manufacturer;
+    private String group;
     private String subGroup;
     private String model;
     private String brand;
@@ -20,6 +21,7 @@ public class PartQueryFilter {
 				.and(PartSpecifications.starterAlternatorCodeContains(starterAlternatorCode))	
 				.and(PartSpecifications.manufacturerEquals(manufacturer))
 				.and(PartSpecifications.subGroupEquals(subGroup))
+				.and(PartSpecifications.groupEquals(group))
 				.and(PartSpecifications.modelEquals(model))
 				.and(PartSpecifications.brandEquals(brand));     	
     }
@@ -42,6 +44,10 @@ public class PartQueryFilter {
     
     public String getSubGroup() {
 		return subGroup;
+	}
+    
+    public String getGroup() {
+		return group;
 	}
 
 	public String getModel() {
@@ -70,6 +76,10 @@ public class PartQueryFilter {
     
     public void setSubGroup(String subGroup) {
 		this.subGroup = subGroup;
+	}
+    
+    public void setGroup(String group) {
+		this.group = group;
 	}
 	
 	public void setModel(String model) {

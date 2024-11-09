@@ -5,8 +5,10 @@ import org.springframework.data.jpa.domain.Specification;
 
 import com.luisguilherme.parts_catalog.entities.Application;
 import com.luisguilherme.parts_catalog.entities.Brand;
+import com.luisguilherme.parts_catalog.entities.Group;
 import com.luisguilherme.parts_catalog.entities.Model;
 import com.luisguilherme.parts_catalog.entities.Part;
+import com.luisguilherme.parts_catalog.entities.SubGroup;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
@@ -64,6 +66,17 @@ public class PartSpecifications {
 	          
 		    };
 	}
+	
+    public static Specification<Part> groupEquals(String group) {
+        return (root, query, builder) -> {
+            if (ObjectUtils.isEmpty(group)) {
+                return null;
+            }
+            Join<Part, SubGroup> subGroupJoin = root.join("subGroup", JoinType.INNER);
+            Join<SubGroup, Group> groupJoin = subGroupJoin.join("group", JoinType.INNER);
+            return builder.equal(builder.upper(groupJoin.get("name")), group.toUpperCase());
+        };
+    }
 	
 	public static Specification<Part> modelEquals(String model) {
         return (root, query, builder) -> {

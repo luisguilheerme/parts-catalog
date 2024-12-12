@@ -17,7 +17,7 @@ public class OpenAPIConfig {
 	public class OpenApiConfig {
 
         @Bean
-        OpenAPI dsmovieAPI() {
+        OpenAPI partsCatalogAPI() {
 			return new OpenAPI()
 					.info(new Info()
 					.title("Parts Catalog")

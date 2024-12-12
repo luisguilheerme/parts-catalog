@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.luisguilherme.parts_catalog.dtos.ApplicationDTO;
 import com.luisguilherme.parts_catalog.dtos.CodeDTO;
 import com.luisguilherme.parts_catalog.dtos.PartDTO;
+import com.luisguilherme.parts_catalog.dtos.PartDetailDTO;
+import com.luisguilherme.parts_catalog.dtos.PartMinDTO;
 import com.luisguilherme.parts_catalog.entities.Application;
 import com.luisguilherme.parts_catalog.entities.Manufacturer;
 import com.luisguilherme.parts_catalog.entities.Model;
@@ -31,16 +33,16 @@ public class PartService {
 	private ApplicationService applicationService;
 	
 	@Transactional(readOnly = true)
-	public PartDTO findById(Long id) {
+	public PartDetailDTO findById(Long id) {
 		Part part = repository.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("Peça não encontrada") );
-		return new PartDTO(part);
+		return new PartDetailDTO(part);
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<PartDTO> findAll(PartQueryFilter filter, Pageable pageable) {
+	public Page<PartMinDTO> findAll(PartQueryFilter filter, Pageable pageable) {
 		Page<Part> result = repository.findAll(filter.toSpecification(), pageable);
-		return result.map(x -> new PartDTO(x));
+		return result.map(x -> new PartMinDTO(x));
 	}
 	
 	@Transactional

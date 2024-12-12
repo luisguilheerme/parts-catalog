@@ -61,6 +61,7 @@ public class Part {
 		this.id = id;
 		this.description = description;
 		this.imgUrl = imgUrl;
+		this.manufacturer = manufacturer;
 		this.subGroup = subGroup;
 	}
 

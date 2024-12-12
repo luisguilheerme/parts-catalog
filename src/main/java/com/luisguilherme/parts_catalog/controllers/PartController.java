@@ -20,6 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.luisguilherme.parts_catalog.dtos.ApplicationDTO;
 import com.luisguilherme.parts_catalog.dtos.CodeDTO;
 import com.luisguilherme.parts_catalog.dtos.PartDTO;
+import com.luisguilherme.parts_catalog.dtos.PartDetailDTO;
+import com.luisguilherme.parts_catalog.dtos.PartMinDTO;
 import com.luisguilherme.parts_catalog.services.PartService;
 import com.luisguilherme.parts_catalog.specifications.PartQueryFilter;
 
@@ -35,14 +37,14 @@ public class PartController {
 	PartService service;
 
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public ResponseEntity<PartDTO> findById(@PathVariable Long id) {
-		PartDTO dto = service.findById(id);
+	public ResponseEntity<PartDetailDTO> findById(@PathVariable Long id) {
+		PartDetailDTO dto = service.findById(id);
 		return ResponseEntity.ok(dto);
 	}
 
 	@GetMapping(produces = "application/json")
-	public ResponseEntity<Page<PartDTO>> findAll(PartQueryFilter filter, Pageable pageable) {
-		Page<PartDTO> dto = service.findAll(filter, pageable);
+	public ResponseEntity<Page<PartMinDTO>> findAll(PartQueryFilter filter, Pageable pageable) {
+		Page<PartMinDTO> dto = service.findAll(filter, pageable);
 		return ResponseEntity.ok(dto);
 	}	
 	

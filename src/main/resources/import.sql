@@ -26,8 +26,6 @@ INSERT INTO tb_manufacturer (name) VALUES ('Prestolite');
 
 INSERT INTO tb_subgroup (name, group_id) VALUES ('Impulsor de Partida', 1);
 INSERT INTO tb_subgroup (name, group_id) VALUES ('Porta Escovas', 1);
-INSERT INTO tb_subgroup (name, group_id) VALUES ('Planetária', 1);
-INSERT INTO tb_subgroup (name, group_id) VALUES ('Kit de Buchas', 1);
 
 
 INSERT INTO tb_subgroup (name, group_id) VALUES ('Regulador de Voltagem', 2);
@@ -101,11 +99,11 @@ INSERT INTO PART_STARTER_ALTERNATOR (PART_ID, STARTER_ALTERNATOR) VALUES (2, 'F0
 INSERT INTO PART_STARTER_ALTERNATOR (PART_ID, STARTER_ALTERNATOR) VALUES (2, 'F000CD0001');
 
 
-INSERT INTO tb_application(PART_ID, model_id) VALUES (1, 16);
-INSERT INTO tb_application(PART_ID, model_id) VALUES (1, 17);
-INSERT INTO tb_application(PART_ID, model_id) VALUES (1, 18);
-INSERT INTO tb_application(PART_ID, model_id) VALUES (1, 19);
-INSERT INTO tb_application(PART_ID, model_id) VALUES (1, 22);
+INSERT INTO tb_application(PART_ID, model_id) VALUES (2, 16);
+INSERT INTO tb_application(PART_ID, model_id) VALUES (2, 17);
+INSERT INTO tb_application(PART_ID, model_id) VALUES (2, 18);
+INSERT INTO tb_application(PART_ID, model_id) VALUES (2, 19);
+INSERT INTO tb_application(PART_ID, model_id) VALUES (2, 22);
 
 
 INSERT INTO tb_part (MANUFACTURER_ID, SUBGROUP_ID) VALUES (2, 2);
